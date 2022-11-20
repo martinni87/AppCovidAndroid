@@ -5,4 +5,22 @@
     <string name="txt_etuser">Usuario</string>
     <string name="pic_covid_title">covid19</string>
     <string name="txt_btn_cerrar_session">Cerrar sesión</string>
+    <string name="txt_btn_configuracion">Configuración</string>
+    <string name="txt_btn_conversor">Conversor</string>
+    <string name="txt_btn_medicion_temperatura">Medición de temperatura</string>
+    <string name="titulo_medicion_temperatura">Medición de temperatura:</string>
+    <string name="txt_nombre">Nombre</string>
+    <string name="txt_apellidos">Apellidos</string>
+    <string name="txt_temperatura">Temperatura</string>
+    <string name="txt_ciudad">Ciudad</string>
+    <string name="txt_provincia">Provincia</string>
+    <string name="txt_btn_finalizar">Finalizar</string>
+    <string name="txt_switch_celsius">Celsius</string>
+    <string name="txt_switch_fahrenheit">Fahrenheit</string>
+    <string name="titulo_resultado_temperatura">Temperatura:</string>
+    <string name="txt_btn_volverMenu">Menú</string>
+    <string name="txt_btn_calcular">Calcular</string>
+    <string name="titulo_conversor1">Conversor de Celsius a Fahrenheit</string>
+    <string name="titulo_conversor2">Conversor de Fahrenheit a Celsius</string>
+    <string name="titulo_configuracion">Configuración:</string>
 </resources>

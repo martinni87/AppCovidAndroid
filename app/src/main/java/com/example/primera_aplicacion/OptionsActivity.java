@@ -6,23 +6,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-public class MainActivity2 extends AppCompatActivity {
+public class OptionsActivity extends AppCompatActivity {
 
     private Button btnVolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_options);
 
-        btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(volver);
+//        btnVolver = findViewById(R.id.btnVolver);
+//        btnVolver.setOnClickListener(volver);
     }
 
     private View.OnClickListener volver = view -> {
-        Intent intent = new Intent(MainActivity2.this, LoginActivity.class);
+        Intent intent = new Intent(OptionsActivity.this, LoginActivity.class);
         startActivity(intent);
     };
 
