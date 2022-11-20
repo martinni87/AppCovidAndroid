@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Radar COVID19</string>
+    <string name="txt_btn_entrar">Entrar</string>
+    <string name="txt_etpassword">Contraseña</string>
+    <string name="txt_etuser">Usuario</string>
+    <string name="pic_covid_title">covid19</string>
+    <string name="txt_btn_cerrar_session">Cerrar sesión</string>
+</resources>
