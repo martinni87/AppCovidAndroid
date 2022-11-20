@@ -23,4 +23,5 @@
     <string name="titulo_conversor1">Conversor de Celsius a Fahrenheit</string>
     <string name="titulo_conversor2">Conversor de Fahrenheit a Celsius</string>
     <string name="titulo_configuracion">Configuración:</string>
+    <string name="txt_btn_guardar">Guardar</string>
 </resources>

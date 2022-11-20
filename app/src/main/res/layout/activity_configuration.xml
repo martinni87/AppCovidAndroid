@@ -57,11 +57,11 @@
             android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/btnCalcular2"
+            android:id="@+id/btnGuardar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/txt_btn_calcular" />
+            android:text="@string/txt_btn_guardar" />
 
     </LinearLayout>
 

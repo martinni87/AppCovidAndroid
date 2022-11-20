@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // Validaciones
             if (areCredencialsValid(user, password)) {
-                Intent intent = new Intent(LoginActivity.this, ConfigurationActivity.class);
+                Intent intent = new Intent(LoginActivity.this, OptionsActivity.class);
                 startActivity(intent);
             }
         }

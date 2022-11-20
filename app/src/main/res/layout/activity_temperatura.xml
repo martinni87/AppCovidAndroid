@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
                 android:hint="@string/txt_temperatura"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:singleLine="true"
                 android:textColorHint="#757575"
                 tools:ignore="TextContrastCheck" />
@@ -129,17 +129,18 @@
             android:layout_weight="1"/>
 
         <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <RadioButton
-                android:id="@+id/rbtnCelsius"
+                android:id="@+id/rbCelsius"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_switch_celsius" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/rbFahrenheit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_switch_fahrenheit" />

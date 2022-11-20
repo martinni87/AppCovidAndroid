@@ -9,20 +9,44 @@ import android.widget.Button;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    private Button btnVolver;
+    private Button btnCerrar, btnMedicion, btnConversor, btnConfiguracion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-//        btnVolver = findViewById(R.id.btnVolver);
-//        btnVolver.setOnClickListener(volver);
+        btnCerrar = findViewById(R.id.btnOpcionCerrar);
+        btnMedicion = findViewById(R.id.btnOpcionTemp);
+        btnConversor = findViewById(R.id.btnOpcionConv);
+        btnConfiguracion = findViewById(R.id.btnOpcionConf);
+
+        btnCerrar.setOnClickListener(cerrarSesion);
+        btnMedicion.setOnClickListener(gotoMedicion);
+        btnConversor.setOnClickListener(gotoConversor);
+        btnConfiguracion.setOnClickListener(gotoConfiguracion);
     }
 
-    private View.OnClickListener volver = view -> {
+    private View.OnClickListener cerrarSesion = view -> {
         Intent intent = new Intent(OptionsActivity.this, LoginActivity.class);
         startActivity(intent);
     };
+
+    private View.OnClickListener gotoMedicion = view -> {
+        Intent intent = new Intent(OptionsActivity.this, TemperaturaActivity.class);
+        startActivity(intent);
+    };
+
+    private View.OnClickListener gotoConversor = view -> {
+        Intent intent = new Intent(OptionsActivity.this, ConversorActivity.class);
+        startActivity(intent);
+    };
+
+    private View.OnClickListener gotoConfiguracion = view -> {
+        Intent intent = new Intent(OptionsActivity.this, ConfigurationActivity.class);
+        startActivity(intent);
+    };
+
+
 
 }
