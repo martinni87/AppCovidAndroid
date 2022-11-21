@@ -7,7 +7,7 @@
     android:layout_gravity="top"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".TempResultsActivity">
 
     <ImageView
         android:id="@+id/imgViewInicial"
