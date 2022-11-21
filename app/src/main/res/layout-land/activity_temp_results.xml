@@ -38,15 +38,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/imgViewInicial">
 
         <LinearLayout
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            android:layout_margin="32dp"
             android:gravity="center|top"
-            android:orientation="vertical"
-            android:layout_margin="32dp">
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ly_etNombre"
@@ -84,6 +84,16 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="32dp"
+            android:gravity="center|top"
+            android:orientation="vertical">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ly_etCiudad"
                 android:layout_width="match_parent"
@@ -119,15 +129,14 @@
                     tools:ignore="Deprecated" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="32dp"
             android:gravity="center|top"
+            android:orientation="vertical"
             android:textAlignment="center">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -143,9 +152,9 @@
                     android:editable="false"
                     android:inputType="none"
                     android:text="35"
+                    android:textAlignment="center"
                     android:textColor="@color/blocked_text"
-                    tools:ignore="Deprecated"
-                    android:textAlignment="center"/>
+                    tools:ignore="Deprecated" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

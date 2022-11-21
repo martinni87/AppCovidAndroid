@@ -46,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:hint="0"
                 android:text=""
+                android:inputType="numberDecimal"
                 android:textAlignment="center" />
 
             <TextView
@@ -93,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:hint="0"
                 android:text=""
+                android:inputType="numberDecimal"
                 android:textAlignment="center" />
 
             <TextView
