@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         // A las variables creadas asignamos un objeto del layout
         btnEntrar = findViewById(R.id.btnEntrar);
@@ -27,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Asignamos una acción de click al botón
         btnEntrar.setOnClickListener(doLogin);
-
 
     }
 
@@ -40,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // Validaciones
             if (areCredencialsValid(user, password)) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity2.class);
+                Intent intent = new Intent(LoginActivity.this, OptionsActivity.class);
                 startActivity(intent);
             }
         }
@@ -60,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 etUser.requestFocus();
                 return false;
             }
-            if (!"1234".equalsIgnoreCase(password)) {
+            if (!"admin".equalsIgnoreCase(password)) {
                 etPassword.setError("Contraseña incorrecta");
                 etPassword.requestFocus();
                 return false;

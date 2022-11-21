@@ -13,7 +13,35 @@
         android:theme="@style/Theme.Primera_aplicacion"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity2"
+            android:name=".ConfigurationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ConversorActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".TempResultsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".TemperaturaActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".OptionsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
