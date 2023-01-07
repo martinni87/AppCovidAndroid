@@ -55,18 +55,27 @@
             android:background="#00FFFFFF"
             android:hint="@string/txt_etpassword"
             android:inputType="textWebPassword"
-            android:password="true"
             android:singleLine="true"
             android:textColorHint="#757575"
             tools:ignore="TextContrastCheck" />
+        <!--            android:password="true"-->
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkbox_text"
+        android:layout_marginTop="32dp"
+        />
 
     <Button
         android:id="@+id/btnEntrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:text="@string/txt_btn_entrar" />
+        android:layout_marginTop="32dp"
+        android:text="@string/txt_btn_entrar"
+        tools:ignore="TextContrastCheck" />
 
 </LinearLayout>
