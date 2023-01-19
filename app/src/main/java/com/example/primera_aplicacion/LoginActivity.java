@@ -2,6 +2,8 @@ package com.example.primera_aplicacion;
 
 import static com.example.primera_aplicacion.common.Constants.SP_PREFERENCES_DIRECTORY;
 import static com.example.primera_aplicacion.common.Constants.SP_USERS_KEY;
+import static com.example.primera_aplicacion.common.Constants.getPass;
+import static com.example.primera_aplicacion.common.Constants.getUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -76,13 +78,13 @@ public class LoginActivity extends AppCompatActivity {
                 return false; //Al fallar retorna false
             }
             //Verificación 2 el usuario debe ser admin
-            if (!"admin".equalsIgnoreCase(user)) {
+            if (!getUser().equalsIgnoreCase(user)) {
                 etUser.setError("Usuario incorrecto");
                 etUser.requestFocus();
                 return false; //Al fallar retorna false
             }
             //Verificación 3 la contraseña debe ser admin
-            if (!"admin".equalsIgnoreCase(password)) {
+            if (!getPass().equalsIgnoreCase(password)) {
                 etPassword.setError("Contraseña incorrecta");
                 etPassword.requestFocus();
                 return false; //Al fallar retorna false
@@ -107,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Para guardar el nombre de usuario usamos un putString, recibe clave -> Valor. Hay que terminar la transacción con un commit o apply
         spEditor.putString(SP_USERS_KEY,user);
-        spEditor.apply(); //Si en lugar de apply usamos commit, hay que hacerlo en el hilo principal de la aplicación. Puede ralentizar la app si hay muchos datos.
+        spEditor.apply(); //Si en lugar de apply usa
     }
 
     //Método para recuperar el valor del campo usuario cuando se haya guardado en sharedpreferences
