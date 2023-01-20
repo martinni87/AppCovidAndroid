@@ -1,5 +1,6 @@
 package com.example.primera_aplicacion.data.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,7 +11,7 @@ import androidx.room.PrimaryKey;
 public class Login {
 
     // Cada variable es una columna de la tabla de BD.
-    @PrimaryKey //Asignamos primary key
+    @PrimaryKey(autoGenerate = true) //Asignamos primary key auto-incremental
     public int id;
 //    @ColumnInfo(name = "usuario") //Podemos referenciar la variable user en Java a una columna Usuario en SQL.
     public String user;
@@ -18,4 +19,15 @@ public class Login {
     public String password;
 //    @ColumnInfo(name = "recuerda")
     public boolean remember;
+
+    @NonNull
+    @Override
+    public String toString(){
+        return "Login{" +
+                "id = " + id +
+                ", user = " + user +
+                ", password = " + password +
+                ", remember = " + remember +
+                "}\n";
+    }
 }

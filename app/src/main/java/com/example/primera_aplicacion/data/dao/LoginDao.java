@@ -12,7 +12,7 @@ import com.example.primera_aplicacion.data.model.Login;
 import java.util.List;
 
 @Dao
-public interface loginDao {
+public interface LoginDao {
 
     @Query("SELECT * FROM login")
     List<Login> getAll();
