@@ -23,6 +23,9 @@ import com.example.primera_aplicacion.data.model.Login;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+
 public class LoginActivity extends AppCompatActivity {
 
     // Variables de objetos en activity layout
@@ -48,7 +51,10 @@ public class LoginActivity extends AppCompatActivity {
 
         //Creamos la instancia que controla la database
         database = Room.databaseBuilder(LoginActivity.this, AppDatabase.class,"pruebas")
-                .allowMainThreadQueries() //Esto permite la ejecución de hilos de segundo plano en primer plano... NO HACERLO ESTO ES SOLO PRUEBA
+                //.allowMainThreadQueries() //Esto permite la ejecución de hilos de segundo plano en primer plano... NO HACERLO ESTO ES SOLO PRUEBA
+                //.fallbackToDestructiveMigration() //Si hay un cambio en la base de datos, se borra lo que hay. Esto solo está bien usarlo en pruebas.
+                //En lugar de allowMainThreadQueries vamos a usar consultas asíncronas en hilos secundarios
+                //En kotlin son corrutinas y en java tenemos RxJava o LiveData y Guava
                 .build();
 
         // Si hay datos guardados en las sharedpreferences, los cargamos
@@ -154,10 +160,10 @@ public class LoginActivity extends AppCompatActivity {
         login.remember = remember;
 
         //Insertamos en la DB el dato del intento de acceso
-        loginDao.insert(login);
+        loginDao.insertData(login);
 
         //Vemos el insert hecho en el Logcat en debug
-        List<Login> logins = loginDao.getAll();
-        Log.d("Mis pruebas",String.valueOf(logins));
+        Single<List<Login>> logins = loginDao.getAll();
+//        Log.d("Mis pruebas",String.valueOf(logins));
     }
 }

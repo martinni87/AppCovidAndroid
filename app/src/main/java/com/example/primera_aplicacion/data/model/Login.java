@@ -20,7 +20,6 @@ public class Login {
 //    @ColumnInfo(name = "recuerda")
     public boolean remember;
 
-    @NonNull
     @Override
     public String toString(){
         return "Login{" +

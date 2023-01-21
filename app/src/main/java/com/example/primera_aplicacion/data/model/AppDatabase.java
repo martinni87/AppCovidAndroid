@@ -6,8 +6,12 @@ import androidx.room.RoomDatabase;
 
 import com.example.primera_aplicacion.data.dao.LoginDao;
 
-@Database(entities = {Login.class}, version = 2, autoMigrations = {
-        @AutoMigration(from = 1, to = 2)    //Al hacer cambios en la BD, tenemos que aumentar el número de versión
+@Database(
+        entities = {Login.class},
+        version = 4,
+        //Para cosas simples utilizaremos automigrations, recibe 3 parámetros, from, to y el objeto que hace la migración (opcional)
+        autoMigrations = {
+                @AutoMigration(from = 3, to = 4)    //Al hacer cambios en la BD, tenemos que aumentar el número de versión
                                             // e indicar el tipo de automigración entre versiones.
 })
 public abstract class AppDatabase extends RoomDatabase {

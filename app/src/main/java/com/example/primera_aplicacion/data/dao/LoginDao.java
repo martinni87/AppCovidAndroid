@@ -5,18 +5,25 @@ package com.example.primera_aplicacion.data.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.primera_aplicacion.data.model.Login;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface LoginDao {
 
     @Query("SELECT * FROM login")
-    List<Login> getAll();
+//    List<Login> getAll();
+    public Single<List<Login>> getAll();
 
-    @Insert
-    void insert(Login login);
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
+//    void insert(Login login);
+    public Completable insertData(Login login);
 }
