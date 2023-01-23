@@ -4,13 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class OptionsActivity extends AppCompatActivity {
 
     //Creamos las variables que van a almacenar los datos de los botones de la Activity
     private Button btnCerrar, btnMedicion, btnConversor, btnConfiguracion;
+    //Tags para log.d
+    private String TAG = "Logger Home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +42,8 @@ public class OptionsActivity extends AppCompatActivity {
         btnMedicion.setOnClickListener(gotoMedicion);
         btnConversor.setOnClickListener(gotoConversor);
         btnConfiguracion.setOnClickListener(gotoConfiguracion);
+
+        makeRequest();
     }
 
     /* Nota sobre los métodos siguientes, en todos los casos declaramos un Intent que definirá de dónde salimos y a dónde vamos
@@ -57,4 +73,42 @@ public class OptionsActivity extends AppCompatActivity {
         Intent intent = new Intent(OptionsActivity.this, ConfigurationActivity.class);
         startActivity(intent);
     };
+
+    //MÉTODO REQUEST LLAMADA HTTPS
+    private void makeRequest(){
+        Log.d(TAG, "makeRequest: Request iniciada.");
+        RequestQueue queue = Volley.newRequestQueue(OptionsActivity.this);
+//        String url = "https://elcampico.org";
+//        StringRequest request = new StringRequest(
+//                Request.Method.GET, url,
+//                response -> {
+//                    Log.d(TAG, "onResponse: " + response);
+//                },
+//                error -> {
+//                    Log.d(TAG, "onErrorResponse: " + error.getMessage());
+//                }
+//        );
+        String url = "https://valorant-api.com/v1/agents";
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                response ->{
+                    Log.d(TAG, "onResponse: " + response);
+                    //Obtenemos el JsonArray
+                    try {
+                        JSONArray agents = response.getJSONArray("data");
+                        for (int i = 0; i < agents.length(); i++){
+                            Log.d(TAG, "Agent: " + agents.getJSONObject(i).getString("displayName") + " Presente.");
+                        }
+                    } catch (JSONException e) {
+                        Log.d(TAG, "Error respuesta getJSONArray: " + e.getMessage());
+                    }
+                },
+                error -> {
+                    Log.d(TAG, "onErrorResponse: " + error.getMessage());
+                }
+        );
+
+        //Añadimos la request a la cola.
+        queue.add(request);
+    }
 }
