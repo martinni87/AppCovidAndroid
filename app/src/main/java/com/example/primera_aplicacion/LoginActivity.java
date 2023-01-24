@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // Si el método areCredencialsValid devuelve true, se crea el Intent y se lanza la siguiente Activity
             if (areCredencialsValid(user, password)) {
-                Intent intent = new Intent(LoginActivity.this, OptionsActivity.class);
+                Intent intent = new Intent(LoginActivity.this, DataTableActivity.class);
                 startActivity(intent);
             }
         }
