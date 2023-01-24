@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ConversorFragment">
+    tools:context=".fragments.SettingsFragment">
 
 
     <TextView
-        android:id="@+id/fr_conversor_tv"
+        android:id="@+id/fr_settings_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ConversorFragment"
+        android:text="SettingsFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

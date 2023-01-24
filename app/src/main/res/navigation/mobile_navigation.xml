@@ -7,21 +7,31 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.primera_aplicacion.ui.home.HomeFragment"
+        android:name="com.example.primera_aplicacion.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
-    <!-- Este fragment antes era Gallery -->
     <fragment
-        android:id="@+id/nav_medicion_temp"
-        android:name="com.example.primera_aplicacion.ui.temperature.TemperatureFragment"
+        android:id="@+id/nav_temp"
+        android:name="com.example.primera_aplicacion.fragments.TempFragment"
         android:label="@string/menu_temp"
-        tools:layout="@layout/fragment_temperature" />
+        tools:layout="@layout/fragment_temp" />
 
-    <!-- Este fragment antes era slideshow -->
     <fragment
         android:id="@+id/nav_conversor"
-        android:name="com.example.primera_aplicacion.ui.conversor.ConversorFragment"
+        android:name="com.example.primera_aplicacion.fragments.ConversorFragment"
         android:label="@string/menu_conversor"
         tools:layout="@layout/fragment_conversor" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.primera_aplicacion.fragments.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_exit"
+        android:name="com.example.primera_aplicacion.fragments.ExitFragment"
+        android:label="@string/menu_exit"
+        tools:layout="@layout/fragment_exit" />
 </navigation>
