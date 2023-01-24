@@ -1,4 +1,4 @@
-package com.example.primera_aplicacion.ui.gallery;
+package com.example.primera_aplicacion.ui.conversor;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.primera_aplicacion.databinding.FragmentGalleryBinding;
+import com.example.primera_aplicacion.databinding.FragmentConversorBinding;
 
-public class GalleryFragment extends Fragment {
+public class ConversorFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentConversorBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        ConversorViewModel conversorViewModel =
+                new ViewModelProvider(this).get(ConversorViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentConversorBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textSlideshow;
+        conversorViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

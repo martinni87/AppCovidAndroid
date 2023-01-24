@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Primera_aplicacion"
         tools:targetApi="31">
         <activity
+            android:name=".MenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".NavigationActivity"
             android:exported="false"
             android:label="@string/title_activity_navigation"

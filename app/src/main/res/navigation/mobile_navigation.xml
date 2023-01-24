@@ -11,15 +11,17 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
+    <!-- Este fragment antes era Gallery -->
     <fragment
         android:id="@+id/nav_medicion_temp"
-        android:name="com.example.primera_aplicacion.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.example.primera_aplicacion.ui.temperature.TemperatureFragment"
+        android:label="@string/menu_temp"
+        tools:layout="@layout/fragment_temperature" />
 
+    <!-- Este fragment antes era slideshow -->
     <fragment
         android:id="@+id/nav_conversor"
-        android:name="com.example.primera_aplicacion.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.example.primera_aplicacion.ui.conversor.ConversorFragment"
+        android:label="@string/menu_conversor"
+        tools:layout="@layout/fragment_conversor" />
 </navigation>
