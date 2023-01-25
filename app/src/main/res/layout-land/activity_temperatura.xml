@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="top"
     android:orientation="vertical"
-    tools:context=".TemperaturaActivity">
+    tools:context=".fragments.TempFragment">
 
     <ImageView
         android:id="@+id/imgViewInicial"

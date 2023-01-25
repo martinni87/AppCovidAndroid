@@ -15,19 +15,19 @@
         android:id="@+id/nav_temp"
         android:name="com.example.primera_aplicacion.fragments.TempFragment"
         android:label="@string/menu_temp"
-        tools:layout="@layout/fragment_temp" />
+        tools:layout="@layout/activity_temperatura" />
 
     <fragment
         android:id="@+id/nav_conversor"
         android:name="com.example.primera_aplicacion.fragments.ConversorFragment"
         android:label="@string/menu_conversor"
-        tools:layout="@layout/fragment_conversor" />
+        tools:layout="@layout/activity_conversor" />
 
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.primera_aplicacion.fragments.SettingsFragment"
         android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/activity_settings" />
 
     <fragment
         android:id="@+id/nav_exit"

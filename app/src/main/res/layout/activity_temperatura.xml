@@ -7,7 +7,7 @@
     android:layout_gravity="top"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".TemperaturaActivity">
+    tools:context=".fragments.TempFragment">
 
     <ImageView
         android:id="@+id/imgViewInicial"

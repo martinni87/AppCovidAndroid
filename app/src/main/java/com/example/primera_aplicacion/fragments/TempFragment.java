@@ -11,12 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.primera_aplicacion.R;
 import com.example.primera_aplicacion.TempResultsActivity;
-import com.example.primera_aplicacion.TemperaturaActivity;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

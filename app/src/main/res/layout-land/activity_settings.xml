@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="top"
     android:orientation="vertical"
-    tools:context=".SettingsActivity">
+    tools:context=".fragments.SettingsFragment">
 
     <ImageView
         android:id="@+id/imgViewInicial"
