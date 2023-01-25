@@ -1,5 +1,6 @@
 package com.example.primera_aplicacion;
 
+import static com.example.primera_aplicacion.common.Constants.DB_NAME;
 import static com.example.primera_aplicacion.common.Constants.LOGIN_PASS;
 import static com.example.primera_aplicacion.common.Constants.LOGIN_USER;
 import static com.example.primera_aplicacion.common.Constants.SP_PREFERENCES_DIRECTORY;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         btnEntrar.setOnClickListener(doLogin);
 
         //Creamos la instancia que controla la database
-        database = Room.databaseBuilder(LoginActivity.this, AppDatabase.class,"pruebas")
+        database = Room.databaseBuilder(LoginActivity.this, AppDatabase.class,DB_NAME)
                 //.allowMainThreadQueries() //Esto permite la ejecución de hilos de segundo plano en primer plano... NO HACERLO ESTO ES SOLO PRUEBA
                 //.fallbackToDestructiveMigration() //Si hay un cambio en la base de datos, se borra lo que hay. Esto solo está bien usarlo en pruebas.
                 //En lugar de allowMainThreadQueries vamos a usar consultas asíncronas en hilos secundarios
