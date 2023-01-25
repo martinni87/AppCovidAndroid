@@ -10,10 +10,7 @@ import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -40,8 +37,8 @@ public class OptionsActivity extends AppCompatActivity {
         //Asignamos a cada botón un método Listener para detectar la pulsasión. Cada método nos lleva a un activity diferente.
         btnCerrar.setOnClickListener(cerrarSesion);
         btnMedicion.setOnClickListener(gotoMedicion);
-        btnConversor.setOnClickListener(gotoConversor);
-        btnConfiguracion.setOnClickListener(gotoConfiguracion);
+//        btnConversor.setOnClickListener(gotoConversor);
+//        btnConfiguracion.setOnClickListener(gotoConfiguracion);
 
         makeRequest();
     }
@@ -63,16 +60,16 @@ public class OptionsActivity extends AppCompatActivity {
     };
 
     //Go to conversor nos lleva a una calculadora que convierte celsius a fahrenheit y viceversa
-    private View.OnClickListener gotoConversor = view -> {
-        Intent intent = new Intent(OptionsActivity.this, ConversorActivity.class);
-        startActivity(intent);
-    };
+//    private View.OnClickListener gotoConversor = view -> {
+//        Intent intent = new Intent(OptionsActivity.this, ConversorActivity.class);
+//        startActivity(intent);
+//    };
 
     //Go to configuración nos lleva a la vista para configurar celsius o fahrenheit como unidad de medida por defecto
-    private View.OnClickListener gotoConfiguracion = view -> {
-        Intent intent = new Intent(OptionsActivity.this, ConfigurationActivity.class);
-        startActivity(intent);
-    };
+//    private View.OnClickListener gotoConfiguracion = view -> {
+//        Intent intent = new Intent(OptionsActivity.this, SettingsActivity.class);
+//        startActivity(intent);
+//    };
 
     //MÉTODO REQUEST LLAMADA HTTPS
     private void makeRequest(){

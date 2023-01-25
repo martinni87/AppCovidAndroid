@@ -73,7 +73,7 @@ public class TempResultsActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             //Al hacer click en MENU volveremos a la OptionsActivity
-            Intent intent = new Intent(TempResultsActivity.this,OptionsActivity.class);
+            Intent intent = new Intent(TempResultsActivity.this,NavigationActivity.class);
             startActivity(intent);
         }
     };

@@ -20,7 +20,7 @@
             android:label="@string/title_activity_navigation"
             android:theme="@style/Theme.Primera_aplicacion.NoActionBar" />
         <activity
-            android:name=".ConfigurationActivity"
+            android:name=".SettingsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

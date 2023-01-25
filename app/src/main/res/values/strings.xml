@@ -19,7 +19,7 @@
     <string name="txt_switch_celsius">Celsius</string>
     <string name="txt_switch_fahrenheit">Fahrenheit</string>
     <string name="titulo_resultado_temperatura">Temperatura:</string>
-    <string name="txt_btn_volverMenu">Menú</string>
+    <string name="txt_btn_volverMenu">Volver al inicio</string>
     <string name="txt_btn_calcular">Calcular</string>
     <string name="titulo_conversor1">Conversor de Celsius a Fahrenheit</string>
     <string name="titulo_conversor2">Conversor de Fahrenheit a Celsius</string>
