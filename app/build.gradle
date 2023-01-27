@@ -47,6 +47,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-fragment:2.4.1'
     implementation 'androidx.navigation:navigation-ui:2.4.1'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     annotationProcessor "androidx.room:room-compiler:2.4.3"
     implementation "androidx.room:room-rxjava2:2.4.3"
     implementation "androidx.room:room-rxjava3:2.4.3"

@@ -2,9 +2,7 @@ package com.example.primera_aplicacion.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +11,23 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.primera_aplicacion.R;
 import com.example.primera_aplicacion.TempResultsActivity;
+import com.example.primera_aplicacion.models.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class TempFragment extends Fragment {
     //Declaramos btnFinalizar para el botón del formulario
@@ -28,6 +38,7 @@ public class TempFragment extends Fragment {
     private LinkedHashMap<String, String> datosPaciente = new LinkedHashMap<>();
     //Variables que almacenarán el objeto radioButton seleccionado en la vista.
     private RadioButton rbCelsius, rbFahrenheit;
+    private int format; //Se añade para adaptar la app al formato de la BD. Valor 1 indica celsius, valor 2 indica fahrenheit
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,13 +92,20 @@ public class TempFragment extends Fragment {
                 //Nos queda asignar el tipo de escala, que lo hacemos con el operador ternario, según esté marcado celsius o no
                 //Si ninguno está marcado (Celsius o Fahrenheit) nunca llegamos aquí, porque habría fallado la validación
                 //por lo que en este punto sí o sí estará marcado Celsius o Fahrenheit
-                String escala = (rbCelsius.isChecked() ? "Celsius" : "Fahrenheit");
+                format = (rbCelsius.isChecked() ? 1 : 2); //1 Celsius, 2 Fahrenheit
+//                String escala = (rbCelsius.isChecked() ? "Celsius" : "Fahrenheit");
 
                 //Añadimos la escala al bundle
-                bundle.putString("escala",escala);
+                bundle.putInt("format",format);
+//                bundle.putString("escala",escala);
 
                 //Cargamos el bundle en el intent y pasamos a la siguiente activity
                 intent.putExtras(bundle);
+
+                //Una vez validado, añadimos método para guardar datos pasados por intent en base de datos. Usamos los web services
+                saveToDataBase();
+
+                //Lanzamos la nueva activity
                 startActivity(intent);
             }
         }
@@ -128,5 +146,53 @@ public class TempFragment extends Fragment {
         for (Map.Entry<String,EditText> entry:camposFormulario.entrySet()) {
             datosPaciente.put(entry.getKey(), entry.getValue().getText()+"");
         }
+    }
+
+    /**
+     * Método saveToDataBase registra una nueva entrada en la base de datos.
+     * Toma los valores pasados por intent previamente a la activity y los transforma a un objeto JSON
+     * para mandarlos al servicio web en PHP que se encargará de registrarlo en la base de datos.
+     */
+    private void saveToDataBase(){
+        //Lista en donde almacenaremos los usuarios recogidos de la base de datos
+        HashMap<Integer, User> userList = new HashMap<>();
+
+        //Realizamos conexión con servicios web para verificar usuario y contraseña
+        RequestQueue queue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
+        String url = "http://192.168.0.15/simple-web-service/app/temp.php";
+
+        //Creamos un conjunto CLAVE => VALOR que contendrá los datos del JSON que vamos a enviar.
+        HashMap<String,String> parameters = new HashMap<>();
+        parameters.put("nombre",camposFormulario.get("nombre").getText().toString());
+        parameters.put("apellidos",camposFormulario.get("apellidos").getText().toString());
+        parameters.put("temperatura",camposFormulario.get("temperatura").getText().toString());
+        parameters.put("format",format+""); //El valor pasado en un futuro debe ser 1 si es medida en Celsius y 2 si es Fahrenheit
+        parameters.put("ciudad",camposFormulario.get("ciudad").getText().toString());
+        parameters.put("provincia",camposFormulario.get("provincia").getText().toString());
+//        Log.d("martin", "saveToDataBase: " + camposFormulario.get("nombre").getText().toString());
+
+        //Codificamos el conjunto como JSONObject
+        JSONObject jsonDataParameter = new JSONObject(parameters);
+
+        //Creamos el cuerpo de la Request, incluimos el método POST, la url a la que llamamos y pasamos parámetros JSON.
+        //Luego asignamos acciones en caso de respones válida o error.
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, url, jsonDataParameter,
+                response ->{
+                    try {
+                        String msg = response.getBoolean("success") ?
+                                "Se ha registrado la información en la BD" :
+                                "Hubo un fallo en el registro con la BD";
+                        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        Log.d("COMPROBACION", "Error en carga de datos: " + e.getMessage());
+                    }
+                },
+                error -> {
+                    Log.d("COMPROBACION", "onErrorResponse: " + error.getMessage());
+                }
+        );
+        //Añadimos la request a la cola.
+        queue.add(jsonObjectRequest);
     }
 }

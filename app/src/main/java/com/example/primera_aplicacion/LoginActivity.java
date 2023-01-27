@@ -1,30 +1,21 @@
 package com.example.primera_aplicacion;
 
+//import static com.example.primera_aplicacion.common.Constants.DB_NAME;
+
 import static com.example.primera_aplicacion.common.Constants.LOGIN_PASS;
 import static com.example.primera_aplicacion.common.Constants.LOGIN_USER;
 import static com.example.primera_aplicacion.common.Constants.SP_PREFERENCES_DIRECTORY;
 import static com.example.primera_aplicacion.common.Constants.SP_USERS_KEY;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.example.primera_aplicacion.data.dao.LoginDao;
-import com.example.primera_aplicacion.data.model.AppDatabase;
-import com.example.primera_aplicacion.data.model.Login;
-
-import java.util.List;
-
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,8 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnEntrar; //Almacenará el botón ENTRAR
     private EditText etUser, etPassword; //Almacenará datos de campos usuario y contraseña
     private CheckBox rememberUser; //Almacenará la información sobre si se recuerda o no el usuario
-    private AppDatabase database; //Una vez creados los models y el dao, instanciamos un objeto de AppDatabase
-
+//    private AppDatabase database; //Una vez creados los models y el dao, instanciamos un objeto de AppDatabase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +40,12 @@ public class LoginActivity extends AppCompatActivity {
         btnEntrar.setOnClickListener(doLogin);
 
         //Creamos la instancia que controla la database
-        database = Room.databaseBuilder(LoginActivity.this, AppDatabase.class,"pruebas")
+//        database = Room.databaseBuilder(LoginActivity.this, AppDatabase.class,DB_NAME)
                 //.allowMainThreadQueries() //Esto permite la ejecución de hilos de segundo plano en primer plano... NO HACERLO ESTO ES SOLO PRUEBA
                 //.fallbackToDestructiveMigration() //Si hay un cambio en la base de datos, se borra lo que hay. Esto solo está bien usarlo en pruebas.
                 //En lugar de allowMainThreadQueries vamos a usar consultas asíncronas en hilos secundarios
                 //En kotlin son corrutinas y en java tenemos RxJava o LiveData y Guava
-                .build();
+//                .build();
 
         // Si hay datos guardados en las sharedpreferences, los cargamos
         loadUserName();
@@ -79,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             saveUserName(remember ? user : null);
 
             //Método que guarda el intento de inicio de sesión en la base de datos
-            saveInDatabase(user,password,remember);
+//            saveInDatabase(user,password,remember);
 
             // Si el método areCredencialsValid devuelve true, se crea el Intent y se lanza la siguiente Activity
             if (areCredencialsValid(user, password)) {
@@ -94,13 +84,32 @@ public class LoginActivity extends AppCompatActivity {
         //Al inicio seteamos errores a null, para que desaparezcan cuando el usuario inicia por primera vez, o hace una corrección.
         etUser.setError(null);
         etPassword.setError(null);
+
         //Verificación 1, debe rellenarse todos los campos
-        if ("".equalsIgnoreCase(user) || "".equalsIgnoreCase(password)) {
-            etUser.setError("Usuario obligatorio"); //Si no se ha rellenado, se marca error (circulo lateral)
-            etPassword.setError("Contraseña obligatoria"); //Idem
-            etUser.requestFocus(); //Si no se ha rellenado, el cursor hace foco en el campo y lo marca para escribir
-            return false; //Al fallar retorna false
+        if ("".equalsIgnoreCase(user) && "".equalsIgnoreCase(password)) {
+            //Si no se han rellenado, se marcan los dos con error (circulo lateral)
+            etUser.setError("Usuario obligatorio");
+            etPassword.setError("Contraseña obligatoria");
+            //Al fallar mandamos el foco del cursor al primer dato (users) y retornamos false en la verificación
+            etUser.requestFocus();
+            return false;
         }
+
+        //Verificación 2, si no se cumple la condición anterior (porque uno de los dos se ha rellenado) vemos cuál es el vacío
+        if ("".equalsIgnoreCase(user)) {
+            //Si el usuario no se ha rellenado, se marca con error, se hace foco y retornamos false
+            etUser.setError("Usuario obligatorio");
+            etUser.requestFocus();
+            return false;
+        }
+        if ("".equalsIgnoreCase(password)){
+            //Si el usuario se ha rellenado pero no el password, se marca passs con error, se hace foco y retornamos false
+            etPassword.setError("Contraseña obligatoria"); //Idem
+            etPassword.requestFocus();
+            return false;
+        }
+
+// VALIDACIONES ANTIGUAS. DEPRECATED
         //Verificación 2 el usuario debe ser admin
         if (!LOGIN_USER.equalsIgnoreCase(user)) {
             etUser.setError("Usuario incorrecto");
@@ -113,7 +122,8 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.requestFocus();
             return false; //Al fallar retorna false
         }
-        return true; //Al validarse correcto retorna true
+        //Si ninguna de las condiciones anteriores se cumple, entonces el resultado es true y se valida el Login
+        return true;
     }
 
     //Método para guardar el valor del campo usuario en un sharedpreference
@@ -147,23 +157,75 @@ public class LoginActivity extends AppCompatActivity {
         etUser.setText(user);
     }
 
-    //Método para guardar intentos de inicio de sesión en la base de datos
-    private void saveInDatabase(String user, String password, boolean remember){
-        //Dao al que queremos acceder
-        LoginDao loginDao = database.loginDao();
+//    private boolean checkValidationHTTP(String user, String password){
+//        //Variable que almacenará el estado de la validación de credenciales
+//        JSONObject[] agents = new JSONObject[1];
+//        boolean validation[] = {false};
+////        boolean validateCredentials[] = {false};
+//        //Realizamos conexión con servicios web para verificar usuario y contraseña
+//        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+//        String url = "http://192.168.0.15/simple-web-service/app/auth.php";
+//
+//        //Creamos un conjunto CLAVE => VALOR que contendrá los datos del JSON que vamos a enviar.
+//        HashMap<String,String> parameters = new HashMap<>();
+//        parameters.put("user",user);
+//        parameters.put("passwd",password);
+//
+//        //Codificamos el conjunto como JSONObject
+//        JSONObject jsonDataParameter = new JSONObject(parameters);
+//
+//        //Creamos el cuerpo de la Request, incluimos el método POST, la url a la que llamamos y pasamos parámetros JSON.
+//        //Luego asignamos acciones en caso de respones válida o error.
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+//                Request.Method.POST, url, jsonDataParameter,
+//                response ->{
+////                    Log.d(HTTP_REQUEST_TAG, "response: " + response);
+//                    //Obtenemos el JsonArray
+//                    agents[0] = response;
+//                    try {
+//                        Log.d(HTTP_REQUEST_TAG, "Success: " + agents[0].getBoolean("success"));
+//                        validation[0] = agents[0].getBoolean("success");
+////                        validateCredentials[0] = agents[0].getBoolean("success");
+////                        Log.d(HTTP_REQUEST_TAG, "checkValidationHTTP: " + validateCredentials[0]);
+//                    } catch (JSONException e) {
+//                        Log.d(HTTP_REQUEST_TAG, "Success error: " + e.getMessage());
+//                    }
+//                },
+//                error -> {
+//                    Log.d(HTTP_REQUEST_TAG, "onErrorResponse: " + error.getMessage());
+//                }
+//        );
+//
+//        //Añadimos la request a la cola.
+//        queue.add(jsonObjectRequest);
+//
+//        if (!validation[0]){
+//            etUser.setError("Credenciales incorrectas");
+//            etPassword.setError("Credenciales incorrectas");
+//            etUser.requestFocus();
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
-        //Login
-        Login login = new Login();
-//        login.id = (int) Math.round(Math.random() * (9999 - 0 + 1)); //El id no es autoincremental, por lo que tenemos que asignarlo cada vez
-        login.user = user;
-        login.password = password;
-        login.remember = remember;
+    //Método para guardar intentos de inicio de sesión en la base de datos
+//    private void saveInDatabase(String user, String password, boolean remember){
+//        //Dao al que queremos acceder
+//        LoginDao loginDao = database.loginDao();
+//
+//        //Login
+//        Login login = new Login();
+////        login.id = (int) Math.round(Math.random() * (9999 - 0 + 1)); //El id no es autoincremental, por lo que tenemos que asignarlo cada vez
+//        login.user = user;
+//        login.password = password;
+//        login.remember = remember;
 
         //Insertamos en la DB el dato del intento de acceso
-        loginDao.insertData(login);
+//        loginDao.insertData(login);
 
         //Vemos el insert hecho en el Logcat en debug
-        Single<List<Login>> logins = loginDao.getAll();
+//        Single<List<Login>> logins = loginDao.getAll();
 //        Log.d("Mis pruebas",String.valueOf(logins));
-    }
+//    }
 }
