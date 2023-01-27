@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Si hay datos guardados en las sharedpreferences, los cargamos
         loadUserName();
+        //TODO mejorar logging con sharedpreferences
 
     }
 
