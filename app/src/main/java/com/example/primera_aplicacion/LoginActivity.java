@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             /*
                 Con MODE_PRIVATE como parámetro del método getSharedPreferences evitamos que otras apps puedan hacer uso
                 de lo que se guarde en sharedpreferences.
-                savedOptions es el nombre que recibe "el fichero" donde se almacenará la información.
+                SP_PREFERENCES_DIRECTORY = savedOptions es el nombre que recibe "el fichero" donde se almacenará la información.
              */
         SharedPreferences spSaved = LoginActivity.this.getSharedPreferences(SP_PREFERENCES_DIRECTORY,MODE_PRIVATE); //Obtenemos info almacenada, solo modo lectura
 
