@@ -8,13 +8,15 @@ public class User {
     private String city;
     private String province;
     private int temperature;
+    private int format;
 
-    public User(String name, String lastname, String location, String province, int temperature){
+    public User(String name, String lastname, String location, String province, int temperature, int format){
         this.name = name;
         this.lastname = lastname;
         this.city = location;
         this.province = province;
         this.temperature = temperature;
+        this.format = format;
     }
 
     public String getName(){
@@ -32,32 +34,14 @@ public class User {
     public int getTemperature(){
         return temperature;
     }
-
-    public void setName(String name){
-        this.name = name;
-    }
-    public void setLastname(String lastname){
-        this.lastname = lastname;
-    }
-    public void setCity(String city){
-        this.city = city;
-    }
-    public void setProvince(String province){
-        this.province = province;
-    }
-    public void setTemperature(int temperature){
-        this.temperature = temperature;
+    public int getFormat(){
+        return format;
     }
 
     public void printData(){
         Log.d("Object User", "Data: " +
                 getName() + " - " + getLastname() + " - " +
                 getCity() + " - " + getProvince() + " - " +
-                getTemperature());
-    }
-
-    public String returnData(){
-        return  getName() + " " + getLastname() + "\t" + getTemperature() + "\n" +
-                getCity() + " " + getProvince() + " ";
+                getTemperature() + " - " + getFormat());
     }
 }
