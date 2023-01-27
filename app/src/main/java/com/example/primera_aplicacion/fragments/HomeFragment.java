@@ -2,10 +2,7 @@ package com.example.primera_aplicacion.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
-=======
 import android.util.Log;
->>>>>>> testing
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +11,10 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
-<<<<<<< HEAD
-=======
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
->>>>>>> testing
 import com.example.primera_aplicacion.R;
 import com.example.primera_aplicacion.TempResultsActivity;
 import com.example.primera_aplicacion.models.User;
