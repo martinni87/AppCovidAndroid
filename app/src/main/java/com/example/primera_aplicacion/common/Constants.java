@@ -9,6 +9,7 @@ public class Constants {
     public static final String LOGIN_PASS = "admin"; //Contraseña para el login
 //    public static final String DB_NAME = "test"; //Nombre de la base de datos.
     public static final String HTTP_REQUEST_TAG = "HTTP_REQUEST_RESPONSE: ";
+    public static final String SP_VALIDATION_KEY = "LOGIN_VALIDATION";
     public static final String SP_SETTINGS_KEY = "SETTINGS_KEY";
 
 }
