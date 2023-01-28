@@ -1,6 +1,11 @@
 package com.example.primera_aplicacion.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.primera_aplicacion.common.Constants.SP_PREFERENCES_DIRECTORY;
+import static com.example.primera_aplicacion.common.Constants.SP_SETTINGS_KEY;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +56,9 @@ public class TempFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.activity_temperatura, container, false);
 
+        //Cargamos datos guardados de sharedpreferences
+        format = loadFromSP();
+
         //Asignamos el objeto botón
         btnFinalizar = rootView.findViewById(R.id.btnFinalizarTemp);
 
@@ -64,6 +72,10 @@ public class TempFragment extends Fragment {
         //Asignamos los objetos RadioButton
         rbCelsius = rootView.findViewById(R.id.rbCelsius);
         rbFahrenheit = rootView.findViewById(R.id.rbFahrenheit);
+
+        //Seteamos si el checkbox debe ir marcado o no. La condición (user != null) dará falso si está vacío (unchecked) y true si tiene contenido (checked)
+        rbCelsius.setChecked(format == 1);
+        rbFahrenheit.setChecked(format == 2);
 
         //Creamos el listener y llamamos al método clickOnFinalizar cuando se presione el botón finalizar
         btnFinalizar.setOnClickListener(clickOnFinalizar);
@@ -194,5 +206,14 @@ public class TempFragment extends Fragment {
         );
         //Añadimos la request a la cola.
         queue.add(jsonObjectRequest);
+    }
+    private int loadFromSP(){
+        //Cargamos las sharedpreferences guardadas.
+        SharedPreferences spSaved = getContext().getSharedPreferences(SP_PREFERENCES_DIRECTORY, MODE_PRIVATE);
+
+        //Asignamos el valor de la clave USER al string, valor por defecto null (si no se ha guardado nada).
+        int format = spSaved.getInt(SP_SETTINGS_KEY,1);
+
+        return format;
     }
 }

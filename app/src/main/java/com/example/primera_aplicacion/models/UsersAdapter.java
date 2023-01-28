@@ -47,7 +47,7 @@ public class UsersAdapter extends ArrayAdapter<User> {
 
         viewHolder.tvName.setText(data.get(position).getName() + " " + data.get(position).getLastname());
         viewHolder.tvLocation.setText(data.get(position).getCity() + ", " + data.get(position).getProvince());
-        viewHolder.tvNumber.setText(data.get(position).getTemperature()+"");
+        viewHolder.tvNumber.setText(data.get(position).getTemperature()+"º " + ((data.get(position).getFormat()==1)?"C":"F"));
 
         return item;
     }

@@ -6,6 +6,7 @@ import static com.example.primera_aplicacion.common.Constants.LOGIN_PASS;
 import static com.example.primera_aplicacion.common.Constants.LOGIN_USER;
 import static com.example.primera_aplicacion.common.Constants.SP_PREFERENCES_DIRECTORY;
 import static com.example.primera_aplicacion.common.Constants.SP_USERS_KEY;
+import static com.example.primera_aplicacion.common.Constants.SP_VALIDATION_KEY;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +19,8 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
-
+//    //Variable de control de logging
+    private boolean loginCheck;
     // Variables de objetos en activity layout
     private Button btnEntrar; //Almacenará el botón ENTRAR
     private EditText etUser, etPassword; //Almacenará datos de campos usuario y contraseña
@@ -36,6 +38,17 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         rememberUser = findViewById(R.id.checkBox);
 
+        //Si al cargar tenemos guardado en sharedpreferences, que las credenciales son válidas, etonces mantenemos
+        //sesión abierta y pasamos directamente a siguiente activity.
+        // Si hay datos guardados en las sharedpreferences, los cargamos
+        loadSharedPreferences();
+
+        //Si ya tenemos la validación realizada previamente y guardada en el sharedpreferences, vamos directamente a la siguiente activity.
+        if (loginCheck){
+            goToNextActivity();
+        }
+
+        //Si dicha validación no se ha realizado correctamente aún, o se ha cerrado sesión, se podrá hacer con el botón del login.
         // Asignamos una acción de click al botón
         btnEntrar.setOnClickListener(doLogin);
 
@@ -46,11 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                 //En lugar de allowMainThreadQueries vamos a usar consultas asíncronas en hilos secundarios
                 //En kotlin son corrutinas y en java tenemos RxJava o LiveData y Guava
 //                .build();
-
-        // Si hay datos guardados en las sharedpreferences, los cargamos
-        loadUserName();
-        //TODO mejorar logging con sharedpreferences
-
     }
 
     //La acción del botón ENTRAR viene definida por el siguiente método
@@ -63,19 +71,20 @@ public class LoginActivity extends AppCompatActivity {
             String password = etPassword.getText() + "";
             boolean remember = rememberUser.isChecked();
 
-            //Primero si se ha marcado "recordar usuario" debemos almacenar el valor del campo usuario en un sharedpreference
-            //En tal caso la variable remember = true, si no se marca será false.
-            //Si remember = true, guardamos el valor de user con el método saveUserName(), caso contrario el valor se establece en null
-            //Usamos el operador ternario.
-            saveUserName(remember ? user : null);
+            /**
+             * Si se ha marcado recordar usuario, entonces almacenamos el valor introducido en el textview de usuario
+             * en nuestro sharedpreferences. Si no se marca, su valor será false, y por tanto se almacena null (nada).
+             * El método también registra el estado del checkbox, si se marca, se guarda su valor como true.
+             */
+            saveUserOnSP(remember?user:null);
 
             //Método que guarda el intento de inicio de sesión en la base de datos
 //            saveInDatabase(user,password,remember);
 
             // Si el método areCredencialsValid devuelve true, se crea el Intent y se lanza la siguiente Activity
             if (areCredencialsValid(user, password)) {
-                Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
-                startActivity(intent);
+                saveStateCredentials(remember);
+                goToNextActivity();
             }
         }
     };
@@ -124,38 +133,65 @@ public class LoginActivity extends AppCompatActivity {
             return false; //Al fallar retorna false
         }
         //Si ninguna de las condiciones anteriores se cumple, entonces el resultado es true y se valida el Login
+//        loginCheck = true;
         return true;
     }
 
+    //Método que crea directorio para shared preferences y lo devuelve para usarse en otros métodos
+    private SharedPreferences loadSharedPreferencesDirectory (){
+        /*
+        Con MODE_PRIVATE como parámetro del método getSharedPreferences evitamos que otras apps puedan hacer uso
+        de lo que se guarde en sharedpreferences.
+        SP_PREFERENCES_DIRECTORY = savedOptions es el nombre que recibe "el fichero" donde se almacenará la información.
+        Obtenemos info almacenada, solo modo lectura
+        */
+        return getApplicationContext().getSharedPreferences(SP_PREFERENCES_DIRECTORY,MODE_PRIVATE);
+    }
     //Método para guardar el valor del campo usuario en un sharedpreference
-    private void saveUserName(String user){
-        //Cargamos las sharedpreference guardadas
-            /*
-                Con MODE_PRIVATE como parámetro del método getSharedPreferences evitamos que otras apps puedan hacer uso
-                de lo que se guarde en sharedpreferences.
-                savedOptions es el nombre que recibe "el fichero" donde se almacenará la información.
-             */
-        SharedPreferences spSaved = LoginActivity.this.getSharedPreferences(SP_PREFERENCES_DIRECTORY,MODE_PRIVATE); //Obtenemos info almacenada, solo modo lectura
-
+    private void saveUserOnSP(String user){
+        //Cargamos el directorio de sharedpreferences
+        SharedPreferences spDirectory = loadSharedPreferencesDirectory();
         //Creamos un editor de los sharedpreferences
-        SharedPreferences.Editor spEditor = spSaved.edit();
+        SharedPreferences.Editor spEditor = spDirectory.edit();
 
         //Para guardar el nombre de usuario usamos un putString, recibe clave -> Valor. Hay que terminar la transacción con un commit o apply
         spEditor.putString(SP_USERS_KEY,user);
         spEditor.apply(); //Si en lugar de apply usa
     }
 
+    //Método para guardar el valor de credenciales validas true o false.
+    private void saveStateCredentials(Boolean validation){
+        SharedPreferences spDirectory = loadSharedPreferencesDirectory();
+        SharedPreferences.Editor spEditor = spDirectory.edit();
+        spEditor.putBoolean(SP_VALIDATION_KEY, validation);
+        spEditor.apply();
+    }
+
     //Método para recuperar el valor del campo usuario cuando se haya guardado en sharedpreferences
-    private void loadUserName(){
-        //Cargamos las sharedpreferences guardadas.
-        SharedPreferences spSaved = getSharedPreferences(SP_PREFERENCES_DIRECTORY, MODE_PRIVATE);
+    private void loadSharedPreferences(){
+        //Cargamos el directorio de sharedpreferences
+        SharedPreferences spDirectory = loadSharedPreferencesDirectory();
 
         //Asignamos el valor de la clave USER al string, valor por defecto null (si no se ha guardado nada).
-        String user = spSaved.getString(SP_USERS_KEY,null);
+        String user = spDirectory.getString(SP_USERS_KEY,null);
+
+        //Asignamos el valor resultante de la comprobación de las credenciales
+        boolean validation = spDirectory.getBoolean(SP_VALIDATION_KEY,false);
 
         //Seteamos si el checkbox debe ir marcado o no. La condición (user != null) dará falso si está vacío (unchecked) y true si tiene contenido (checked)
         rememberUser.setChecked(user != null);
         etUser.setText(user);
+
+        //Finalmente asignamos a la variable global loginCheck el valor guardado en SP_VALIDATION_KEY
+        loginCheck = validation;
+    }
+
+    /**
+     * Método para ir a la siguiente activity
+     */
+    private void goToNextActivity(){
+        Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+        startActivity(intent);
     }
 
 //    private boolean checkValidationHTTP(String user, String password){
